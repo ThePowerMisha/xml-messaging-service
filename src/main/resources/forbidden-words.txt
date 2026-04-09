@@ -1,0 +1,4 @@
+badword
+spam
+hack
+virus

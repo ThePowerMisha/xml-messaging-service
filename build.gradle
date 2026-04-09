@@ -9,10 +9,44 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    xmlbeans
+}
+
 dependencies {
+    xmlbeans 'org.apache.xmlbeans:xmlbeans:5.3.0'
+    implementation 'org.apache.xmlbeans:xmlbeans:5.3.0'
+    implementation 'org.postgresql:postgresql:42.7.10'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
+
+def generatedSrc = layout.buildDirectory.dir("generated-sources/xmlbeans")
+def generatedClasses = layout.buildDirectory.dir("generated-classes/xmlbeans")
+
+tasks.register('generateXmlBeans', JavaExec) {
+    classpath = configurations.xmlbeans
+    mainClass = 'org.apache.xmlbeans.impl.tool.SchemaCompiler'
+
+    args = [
+            "-src", generatedSrc.get().asFile.absolutePath,
+            "-d", generatedClasses.get().asFile.absolutePath,
+            "src/main/resources/schema/UserMessageSchema.xsd"
+    ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir layout.buildDirectory.dir("generated-sources/xmlbeans")
+        }
+        resources {
+            srcDir layout.buildDirectory.dir("generated-classes/xmlbeans")
+        }
+    }
+}
+
 
 test {
     useJUnitPlatform()
