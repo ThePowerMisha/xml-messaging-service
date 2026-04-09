@@ -1,7 +1,7 @@
 package com.thepowermisha.service;
 
 import com.thepowermisha.repository.MessageRepository;
-import noNamespace.MessageDocument;
+import com.thepowermisha.MessageDocument;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
 

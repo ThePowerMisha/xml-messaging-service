@@ -22,6 +22,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
+def schemaFile = file("src/main/resources/schema/UserMessageSchema.xsd")
+def configFile = file("src/main/resources/schema/UserMessageSchema.xsdconfig")
+
 def generatedSrc = layout.buildDirectory.dir("generated-sources/xmlbeans")
 def generatedClasses = layout.buildDirectory.dir("generated-classes/xmlbeans")
 
@@ -32,7 +35,8 @@ tasks.register('generateXmlBeans', JavaExec) {
     args = [
             "-src", generatedSrc.get().asFile.absolutePath,
             "-d", generatedClasses.get().asFile.absolutePath,
-            "src/main/resources/schema/UserMessageSchema.xsd"
+            configFile.absolutePath,
+            schemaFile.absolutePath
     ]
 }
 
