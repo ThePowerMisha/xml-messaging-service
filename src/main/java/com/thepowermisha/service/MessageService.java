@@ -103,6 +103,6 @@ public class MessageService {
         xmlOptions.setSavePrettyPrint();
         xmlOptions.setSavePrettyPrintIndent(4);
 
-        return responseDocument.xmlText(xmlOptions);
+        return responseDocument.xmlText(xmlOptions).replaceAll("[\\r\\n]+", "");
     }
 }
